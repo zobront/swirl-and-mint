@@ -1,12 +1,3 @@
-# DApp Project Template
+# NFT Yourself
 
-This is a simple template for DApp projects built with Hardhat, Ethers.js, Mocha and NextJS.
-
-- Write smart contracts and include as *.sol files in `/contracts` folder
-- Compile using `npx hardhat compile`
-- Write tests using Mocha and include them in the `/test` folder
-- Run your tests using `npx hardhat test`
-- Get deployment information from Infura and add it to `hardhat.config.js`
-- Update details of your deployment script in the `/scripts` folder
-- Deploy with `npx hardhat run scripts/deploy.js --network <insert network name from config>`
-- Create your Next.JS app by adding pages, components, and styles
+Turn your photo into a unique piece of art with Neural Style Transfer, and then deploy it to the Ethereum blockchain as a 1/1 NFT.

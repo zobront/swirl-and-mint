@@ -1,12 +1,12 @@
 const hre = require("hardhat");
 
-async function main() {
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+async function main(name, symbol, manager) {
+  const NFT = await hre.ethers.getContractFactory("SimpleERC721");
+  const nft = await NFT.deploy(name, symbol, manager);
 
-  await greeter.deployed();
+  await nft.deployed();
 
-  console.log("Greeter deployed to:", greeter.address);
+  console.log("NFT deployed to:", nft.address);
 }
 
 main()
