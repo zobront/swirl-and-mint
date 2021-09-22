@@ -1,16 +1,27 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+.container {
+  margin-top: 25px;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.ui .header {
+  text-align: center;
 }
 
-* {
-  box-sizing: border-box;
+form {
+  margin: 30px;
+}
+
+.field-around-btn {
+  justify-content: center;
+  padding: 10px;
+}
+
+.image {
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.success-buttons {
+  margin-top: 15px;
+  text-align: center;
 }
