@@ -1,12 +1,5 @@
-// import Head from 'next/head'
-// import Image from 'next/image'
-// import Link from 'next/link'
-
 import React, { useState, useEffect } from 'react'
 import { Container, Header, Button, Form, Divider } from 'semantic-ui-react'
-
-import { ethers } from "ethers"
-import SimpleERC721 from '../artifacts/contracts/SimpleERC721.sol/SimpleERC721'
 
 import Layout from '../components/Layout'
 import CombinedImage from '../components/CombinedImage';

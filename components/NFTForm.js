@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { ethers } from "ethers"
-import SimpleERC721 from '../artifacts/contracts/SimpleERC721.sol/SimpleERC721'
+import SimpleERC721 from '../contracts/SimpleERC721.json'
 
 import { Header, Form, Button, Divider } from 'semantic-ui-react';
 
