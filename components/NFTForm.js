@@ -96,7 +96,7 @@ const NFTForm = props => {
 					<Form.Input label="Collection: " type="text" name="collection" />
 				</Form.Group>
 				<Form.Input label="Description: " type="text" name="desc" />
-				<Form.Group className="field-around-btn" widths='equal'>
+				<Form.Group className="field-around-btn">
 					<Form.Button animated type="submit" id="nft-btn" primary>
 						<Button.Content visible>NFT it!</Button.Content>
 						<Button.Content hidden>🚀</Button.Content>
