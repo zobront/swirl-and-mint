@@ -11,7 +11,8 @@ const NFTForm = props => {
 	const chain_mapping = {
 		'0x1': 'Ethereum Mainnet',
 		'0x4': 'Rinkeby Test Network',
-		'0x137': 'Polygon Mainnet'
+		'0x137': 'Polygon Mainnet',
+		'0x89': 'Polygon Mainnet'
 	}
 
 	const deployNFTContract = async (e) => {
@@ -87,7 +88,7 @@ const NFTForm = props => {
 	      } else if (props.chainId == '0x4') {
 	      	props.setEtherscanUrl(`https://rinkeby.etherscan.io/address/${nft.address}`)
 	      	props.setOpenseaUrl(`https://testnets.opensea.io/assets/${nft.address}/0`)
-	      } else if (props.chainId == '0x137') {
+	      } else if (props.chainId == '0x137' || props.chainId == '0x89') {
 	      	props.setEtherscanUrl(`https://polygonscan.com/address/${nft.address}`)
 	      	props.setOpenseaUrl(`https://opensea.io/assets/matic/${nft.address}/0`)
 	      } else {
