@@ -6,7 +6,7 @@ import SimpleERC721 from '../contracts/SimpleERC721.json'
 import { Header, Form, Button, Divider, Message } from 'semantic-ui-react';
 
 const NFTForm = props => {
-	const [formState, setFormState] = useState("");
+	const [formState, setFormState] = useState();
 
 	const chain_mapping = {
 		'0x1': 'Ethereum Mainnet',
@@ -37,8 +37,10 @@ const NFTForm = props => {
 	      imgUrl = JSON.parse(img_result).data.url
 	      console.log('Image URL created at: ', imgUrl)
 	    } catch (err) {
-	      console.log('error', err)
+	      console.log('Error with Saving Image: ', err)
 	      props.setDeployStatus('failed')
+	      setFormState('Something went wrong uploading your picture!')
+	      return;
 	    }
 
 	    // CREATE THE JSON METADATA INCLUDING THE IMG URL
@@ -64,23 +66,27 @@ const NFTForm = props => {
 	      jsonUrl = `https://api.jsonbin.io/b/${JSON.parse(json_result).metadata.id}`
 	      console.log('JSON URL created at: ', jsonUrl)
 	    } catch (err) {
-	      console.log('error', err)
+	      console.log('Error with Creating JSON: ', err)
 	      props.setDeployStatus('failed')
+	      setFormState('Something went wrong uploading your JSON metadata!')
 	    }
 
-	        
+	    let nftaddress;
+	    let signerAddress;
+
 	    // DEPLOY THE NFT AND LINK TO THE JSON METADATA
 	    try {
 	      await window.ethereum.request({ method: 'eth_requestAccounts'});
 	      props.setDeployStatus('requesting')
 	      const provider = new ethers.providers.Web3Provider(window.ethereum);
 	      const signer = provider.getSigner();
-	      const signerAddress = await signer.getAddress();
+	      signerAddress = await signer.getAddress();
 
 	      const NFT = await new ethers.ContractFactory(SimpleERC721.abi, SimpleERC721.bytecode, signer);
 	      const nft = await NFT.deploy(colEl.value, "NFT", jsonUrl);
 	      props.setDeployStatus('deploying')
 	      await nft.deployed();
+	      nftaddress = nft.address;
 	      console.log("NFT deployed to: ", nft.address);
 	      if (props.chainId == '0x1') {
 	      	props.setEtherscanUrl(`https://etherscan.io/address/${nft.address}`)
@@ -100,13 +106,41 @@ const NFTForm = props => {
 	      console.log("Token 0 minted and assigned to: ", signerAddress)
 	      props.setDeployStatus('success')
 	    } catch (err) {
-	      console.log(err);
+	      console.log('Error with Deployment: ', err);
 	      props.setDeployStatus('failed')
+	      setFormState('Something went wrong deploying your contract!')
 	    }
+
+	    // FINALLY, ADD RECORD TO MY PERSONAL JSON BIN TO KEEP TRACK OF WHAT'S BEEN PUBLISHED
+	    
+	    headers.append("X-Collection-Id", '614cdcb1aa02be1d444d7be9')
+
+		let date_obj = new Date()
+	    let timestamp = date_obj.toString();
+	    const chainname = chain_mapping[props.chainId]
+
+		let contractInfo = JSON.stringify({
+			"address": nftaddress,
+			"network": chainname,
+	      	"user": signerAddress,
+	      	"timestamp": timestamp
+		})
+
+	    let jsonDBOptions = { method: 'POST', headers: headers, body: contractInfo };
+
+	    try {
+	      const json_resp = await fetch("https://api.jsonbin.io/v3/b", jsonDBOptions)
+	      const json_result = await json_resp.text()
+	      console.log('JSON tracker updated.')
+	    } catch (err) {
+	      console.log('Error updating JSON tracker: ', err)
+	    }
+
+	    setFormState('Ready')
 	}
 
 	useEffect(() => {
-		if (props.deployStatus == 'pending' && props.combinedImgHeader == "Voila! Here's what I whipped up for you...") {
+		if (props.deployStatus == 'pending' && props.combinedImgHeader == "Voila! 🎨") {
 			if (props.hasMetamask) {
 				if (props.chainId in chain_mapping) {
 					setFormState("Ready")	

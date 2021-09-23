@@ -34,6 +34,7 @@ export default function Home() {
     setUploadError('')
     setCombinedImgUrl('https://c.tenor.com/gHo3jnYbDYwAAAAC/bob-ross-painting.gif')
     setCombinedImgHeader('Perfect! Time to work my magic...')
+    setDeployStatus('pending')
 
     let nstHeaders = new Headers();
     nstHeaders.append("api-key", "e10f2b1a-27a5-455a-b242-931c6ccbe395");
@@ -50,12 +51,13 @@ export default function Home() {
       const nst_result = await nst_resp.text()
       nstImageUrl = JSON.parse(nst_result).output_url
       console.log(nstImageUrl)
-      setCombinedImgHeader("Voila! Here's what I whipped up for you...")
+      setCombinedImgHeader("Voila! 🎨")
       setCombinedImgUrl(nstImageUrl)
       setUploadError('')
       setFirstButtonText('Try Again?')
     } catch (err) {
       console.log('error', err)
+      setUploadError("I guess I'm not in the mood to paint right now...")
     }
   }
 
@@ -92,7 +94,7 @@ export default function Home() {
 
         <CombinedImage url={combinedImgUrl} headerContent={combinedImgHeader} />
 
-        <NFTForm hasMetamask={hasMetamask} combinedImgHeader={combinedImgHeader} 
+        <NFTForm hasMetamask={hasMetamask} combinedImgUrl={combinedImgUrl} combinedImgHeader={combinedImgHeader} 
           setEtherscanUrl={setEtherscanUrl} setOpenseaUrl={setOpenseaUrl} 
           deployStatus={deployStatus} setDeployStatus={setDeployStatus} 
           setChainId={setChainId} chainId={chainId} />
