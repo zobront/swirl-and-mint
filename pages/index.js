@@ -13,6 +13,7 @@ export default function Home() {
   const [openseaUrl, setOpenseaUrl] = useState();
   const [firstButtonText, setFirstButtonText] = useState('Make Me a Masterpiece!');
   const [deployStatus, setDeployStatus] = useState('pending');
+  const [hasMetamask, setHasMetamask] = useState(false);
 
   const createCombinedImage = async (e) => {
     e.preventDefault();
@@ -36,11 +37,17 @@ export default function Home() {
       nstImageUrl = JSON.parse(nst_result).output_url
       console.log(nstImageUrl)
       setCombinedImgUrl(nstImageUrl)
-      setFirstButtonText('Try Another?')
+      setFirstButtonText('Try Again?')
     } catch (err) {
       console.log('error', err)
     }
   }
+
+  useEffect(() => {
+    if (typeof window.ethereum !== 'undefined') {
+      setHasMetamask(true);
+    }
+  }, [])
 
   return (
     <Container fluid>
@@ -59,7 +66,7 @@ export default function Home() {
 
       <CombinedImage url={combinedImgUrl} />
 
-      <NFTForm combinedImgUrl={combinedImgUrl} setEtherscanUrl={setEtherscanUrl} setOpenseaUrl={setOpenseaUrl} deployStatus={deployStatus} setDeployStatus={setDeployStatus} />
+      <NFTForm hasMetamask={hasMetamask} combinedImgUrl={combinedImgUrl} setEtherscanUrl={setEtherscanUrl} setOpenseaUrl={setOpenseaUrl} deployStatus={deployStatus} setDeployStatus={setDeployStatus} />
       <LoadingPanel deployStatus={deployStatus} />
       <SuccessPanel deployStatus={deployStatus} etherscanUrl={etherscanUrl} openseaUrl={openseaUrl} />
       

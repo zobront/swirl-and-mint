@@ -21,6 +21,10 @@ form {
   margin-bottom: 20px;
 }
 
+.error-outer-div {
+  text-align: center;
+}
+
 .success-buttons {
   margin-top: 15px;
   text-align: center;

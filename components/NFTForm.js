@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react'
 import { ethers } from "ethers"
 import SimpleERC721 from '../contracts/SimpleERC721.json'
 
-import { Header, Form, Button, Divider } from 'semantic-ui-react';
+import { Header, Form, Button, Divider, Message } from 'semantic-ui-react';
 
 const NFTForm = props => {
+	const [formState, setFormState] = useState("");
+
 	const deployNFTContract = async (e) => {
 	    e.preventDefault();
 	    const NFTForm = e.target;
@@ -75,7 +77,7 @@ const NFTForm = props => {
 	      console.log("NFT deployed to: ", nft.address);
 	      props.setEtherscanUrl(`https://rinkeby.etherscan.io/address/${nft.address}`)
 	      props.setOpenseaUrl(`https://testnets.opensea.io/assets/${nft.address}/0`)
-	      await nft.zachMint(signerAddress, 0);
+	      await nft.initialMint(signerAddress, 0);
 	      console.log("Token 0 minted and assigned to: ", signerAddress)
 	      props.setDeployStatus('success')
 	    } catch (err) {
@@ -84,9 +86,34 @@ const NFTForm = props => {
 	    }
 	}
 
+	useEffect(() => {
+		if (props.hasMetamask) {
+			if (props.deployStatus == 'pending' && props.combinedImgUrl) {
+				setFormState("Ready")
+			} else {
+				setFormState("")
+			}
+		} else {
+			setFormState("You must install Metamask to mint an NFT!")
+		}
+	})
+
+	const noFormDisplay = () => {
+		if (formState) {
+			return (
+				<div className="error-outer-div">
+					<Message negative compact className="no-metamask-error">
+						<Message.Header>{formState}</Message.Header>
+						<p>Follow <a href="https://blog.wetrust.io/how-to-install-and-use-metamask-7210720ca047" target="_blank">these instructions</a> to get it installed.</p>
+					</Message>
+				</div>
+			)
+		}
+		return ""
+	}
 
 	return (
-		props.combinedImgUrl && props.deployStatus == 'pending' ?
+		formState == "Ready" ?
 		<>
 			<Divider />
 			<Header as="h3">Want to make it into an NFT?</Header>
@@ -104,7 +131,7 @@ const NFTForm = props => {
 				</Form.Group>
 			</Form>
 		</>
-		: ""
+		: <>{noFormDisplay()}</>
 	)
 };
 
