@@ -36,6 +36,10 @@ form {
   text-align: center;
 }
 
+.bottom-spacer {
+  height:  50px;
+}
+
 .footer {
   z-index: 2;
   margin-top: 1rem;

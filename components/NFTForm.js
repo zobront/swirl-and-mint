@@ -188,6 +188,7 @@ const NFTForm = props => {
 					</Form.Button>
 				</Form.Group>
 			</Form>
+			<div className="bottom-spacer" />
 		</>
 		: <>{noFormDisplay()}</>
 	)
