@@ -82,7 +82,7 @@ export default function Home() {
       </Head>
       <Container fluid>
         <Header as="h1">Swirl and Mint</Header>
-        <Header as="h4">Creatively combine your favorite photos in seconds to create unique art, then mint your favorites as a 1/1 NFTs in one click.</Header>
+        <Header as="h4">Creatively combine your favorite photos in seconds to create unique AI-generated art, then mint your favorites as a 1/1 NFTs in one click.</Header>
         
         <Form id="make-image-form" onSubmit={createCombinedImage}>
           <Form.Group widths='equal'>
