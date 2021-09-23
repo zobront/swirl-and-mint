@@ -8,6 +8,12 @@ import { Header, Form, Button, Divider, Message } from 'semantic-ui-react';
 const NFTForm = props => {
 	const [formState, setFormState] = useState("");
 
+	const chain_mapping = {
+		'0x1': 'Ethereum Mainnet',
+		'0x4': 'Rinkeby Test Network',
+		'0x137': 'Polygon Mainnet'
+	}
+
 	const deployNFTContract = async (e) => {
 	    e.preventDefault();
 	    const NFTForm = e.target;
@@ -75,8 +81,20 @@ const NFTForm = props => {
 	      props.setDeployStatus('deploying')
 	      await nft.deployed();
 	      console.log("NFT deployed to: ", nft.address);
-	      props.setEtherscanUrl(`https://rinkeby.etherscan.io/address/${nft.address}`)
-	      props.setOpenseaUrl(`https://testnets.opensea.io/assets/${nft.address}/0`)
+	      if (formState == '0x1') {
+	      	props.setEtherscanUrl(`https://etherscan.io/address/${nft.address}`)
+	      	props.setOpenseaUrl(`https://opensea.io/assets/${nft.address}/0`)
+	      } else if (formState == '0x4') {
+	      	props.setEtherscanUrl(`https://rinkeby.etherscan.io/address/${nft.address}`)
+	      	props.setOpenseaUrl(`https://testnets.opensea.io/assets/${nft.address}/0`)
+	      } else if (formState == '0x137') {
+	      	props.setEtherscanUrl(`https://polygonscan.com/address/${nft.address}`)
+	      	props.setOpenseaUrl(`https://opensea.io/assets/matic/${nft.address}/0`)
+	      } else {
+	      	props.setEtherscanUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+	      	props.setOpenseaUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+	      }
+	      props.setDeployStatus('minting')
 	      await nft.initialMint(signerAddress, 0);
 	      console.log("Token 0 minted and assigned to: ", signerAddress)
 	      props.setDeployStatus('success')
@@ -87,24 +105,28 @@ const NFTForm = props => {
 	}
 
 	useEffect(() => {
-		if (props.hasMetamask) {
-			if (props.deployStatus == 'pending' && props.combinedImgUrl) {
-				setFormState("Ready")
+		if (props.deployStatus == 'pending' && props.combinedImgUrl) {
+			if (props.hasMetamask) {
+				if (props.chainId in chain_mapping) {
+					setFormState("Ready")	
+				} else {
+					setFormState("You must be on Ethereum Mainnet, Polygon Mainnet, or Rinkeby Test Network to mint an NFT.")
+				}
 			} else {
-				setFormState("")
+				setFormState("You must install Metamask to mint an NFT!")
 			}
 		} else {
-			setFormState("You must install Metamask to mint an NFT!")
+			setFormState("")
 		}
 	})
 
 	const noFormDisplay = () => {
 		if (formState) {
 			return (
-				<div className="error-outer-div">
-					<Message negative compact className="no-metamask-error">
+				<div className="message-outer-div">
+					<Message negative compact>
 						<Message.Header>{formState}</Message.Header>
-						<p>Follow <a href="https://blog.wetrust.io/how-to-install-and-use-metamask-7210720ca047" target="_blank">these instructions</a> to get it installed.</p>
+						{!props.hasMetamask ? <p>Follow <a href="https://blog.wetrust.io/how-to-install-and-use-metamask-7210720ca047" target="_blank">these instructions</a> to get it installed.</p> : ''}
 					</Message>
 				</div>
 			)
@@ -116,7 +138,8 @@ const NFTForm = props => {
 		formState == "Ready" ?
 		<>
 			<Divider />
-			<Header as="h3">Want to make it into an NFT?</Header>
+			<Header as="h3">Like It? Mint an NFT on the <i>{chain_mapping[props.chainId]}</i>.</Header>
+			<p className="subheader"><a href="https://i.ibb.co/zbRKkF2/OpenSea.png" target="_blank">(Where do these fields populate on OpenSea?)</a></p>
 			<Form onSubmit={deployNFTContract}>
 				<Form.Group widths="equal">
 					<Form.Input label="Name: " type="text" name="name" />

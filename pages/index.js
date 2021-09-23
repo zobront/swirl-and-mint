@@ -5,7 +5,8 @@ import Layout from '../components/Layout'
 import CombinedImage from '../components/CombinedImage';
 import NFTForm from '../components/NFTForm';
 import LoadingPanel from '../components/LoadingPanel';
-import SuccessPanel from '../components/SuccessPanel';
+// import SuccessPanel from '../components/SuccessPanel';
+import Footer from '../components/Footer';
 
 export default function Home() {
   const [combinedImgUrl, setCombinedImgUrl] = useState();
@@ -14,6 +15,7 @@ export default function Home() {
   const [firstButtonText, setFirstButtonText] = useState('Make Me a Masterpiece!');
   const [deployStatus, setDeployStatus] = useState('pending');
   const [hasMetamask, setHasMetamask] = useState(false);
+  const [chainId, setChainId] = useState();
 
   const createCombinedImage = async (e) => {
     e.preventDefault();
@@ -43,16 +45,23 @@ export default function Home() {
     }
   }
 
-  useEffect(() => {
+  useEffect( async () => {
     if (typeof window.ethereum !== 'undefined') {
       setHasMetamask(true);
     }
+
+    const chain = await ethereum.request({ method: 'eth_chainId' });
+    setChainId(chain);
+
+    ethereum.on('chainChanged', () => {
+      window.location.reload();
+    });
   }, [])
 
   return (
     <Container fluid>
-      <Header as="h1">Let AI Help You Create NFT Art</Header>
-      <Header as="h4">Combine your favorite photos in seconds to create unique art, then mint to blockchain as a 1/1 NFT in one click.</Header>
+      <Header as="h1">Swirl and Mint</Header>
+      <Header as="h4">Creatively combine your favorite photos in seconds to create unique art, then mint your favorites as a 1/1 NFTs in one click.</Header>
       
       <Form id="make-image-form" onSubmit={createCombinedImage}>
         <Form.Group widths='equal'>
@@ -66,10 +75,12 @@ export default function Home() {
 
       <CombinedImage url={combinedImgUrl} />
 
-      <NFTForm hasMetamask={hasMetamask} combinedImgUrl={combinedImgUrl} setEtherscanUrl={setEtherscanUrl} setOpenseaUrl={setOpenseaUrl} deployStatus={deployStatus} setDeployStatus={setDeployStatus} />
-      <LoadingPanel deployStatus={deployStatus} />
-      <SuccessPanel deployStatus={deployStatus} etherscanUrl={etherscanUrl} openseaUrl={openseaUrl} />
-      
+      <NFTForm hasMetamask={hasMetamask} combinedImgUrl={combinedImgUrl} 
+        setEtherscanUrl={setEtherscanUrl} setOpenseaUrl={setOpenseaUrl} 
+        deployStatus={deployStatus} setDeployStatus={setDeployStatus} 
+        setChainId={setChainId} chainId={chainId} />
+      <LoadingPanel deployStatus={deployStatus} etherscanUrl={etherscanUrl} openseaUrl={openseaUrl} />
+      <Footer />
     </Container>
   );
 }

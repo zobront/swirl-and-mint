@@ -6,6 +6,10 @@
   text-align: center;
 }
 
+.subheader {
+  text-align: center;
+}
+
 form {
   margin: 30px;
 }
@@ -21,11 +25,23 @@ form {
   margin-bottom: 20px;
 }
 
-.error-outer-div {
+.message-outer-div {
+  margin-top: 40px;
   text-align: center;
 }
 
 .success-buttons {
   margin-top: 15px;
+  text-align: center;
+}
+
+.footer {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #e0e1e2;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   text-align: center;
 }
