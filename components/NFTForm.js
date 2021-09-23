@@ -81,13 +81,13 @@ const NFTForm = props => {
 	      props.setDeployStatus('deploying')
 	      await nft.deployed();
 	      console.log("NFT deployed to: ", nft.address);
-	      if (formState == '0x1') {
+	      if (props.chainId == '0x1') {
 	      	props.setEtherscanUrl(`https://etherscan.io/address/${nft.address}`)
 	      	props.setOpenseaUrl(`https://opensea.io/assets/${nft.address}/0`)
-	      } else if (formState == '0x4') {
+	      } else if (props.chainId == '0x4') {
 	      	props.setEtherscanUrl(`https://rinkeby.etherscan.io/address/${nft.address}`)
 	      	props.setOpenseaUrl(`https://testnets.opensea.io/assets/${nft.address}/0`)
-	      } else if (formState == '0x137') {
+	      } else if (props.chainId == '0x137') {
 	      	props.setEtherscanUrl(`https://polygonscan.com/address/${nft.address}`)
 	      	props.setOpenseaUrl(`https://opensea.io/assets/matic/${nft.address}/0`)
 	      } else {
