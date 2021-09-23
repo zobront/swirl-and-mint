@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Head from 'next/head';
 import { Container, Header, Button, Form, Divider } from 'semantic-ui-react'
 
 import Layout from '../components/Layout'
@@ -76,6 +77,9 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Swirl & Mint</title>
+      </Head>
       <Container fluid>
         <Header as="h1">Swirl and Mint</Header>
         <Header as="h4">Creatively combine your favorite photos in seconds to create unique art, then mint your favorites as a 1/1 NFTs in one click.</Header>
