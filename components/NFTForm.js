@@ -171,11 +171,11 @@ const NFTForm = props => {
 
 	const networkHover = (e) => {
 		const popup = document.getElementById('network-popup');
-		const popupdims = popup.getBoundingClientRect();
 		const rect = e.target.getBoundingClientRect();
+		console.log(rect)
 
 		popup.style.left = rect.left + rect.width + 25 + "px";
-		popup.style.top = rect.top + 5 + "px";
+		popup.style.top = rect.top + window.scrollY - 10 + "px";
 		popup.style.display = 'inline-block';
 	}
 
