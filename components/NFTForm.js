@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { ethers } from "ethers"
 import SimpleERC721 from '../contracts/SimpleERC721.json'
 
-import { Header, Form, Button, Divider, Message } from 'semantic-ui-react';
+import { Header, Form, Button, Divider, Message, Popup } from 'semantic-ui-react';
 
 const NFTForm = props => {
 	const [formState, setFormState] = useState();
@@ -169,18 +169,34 @@ const NFTForm = props => {
 		return ""
 	}
 
+	const networkHover = (e) => {
+		const popup = document.getElementById('network-popup');
+		const popupdims = popup.getBoundingClientRect();
+		const rect = e.target.getBoundingClientRect();
+
+		popup.style.left = rect.left + rect.width + 25 + "px";
+		popup.style.top = rect.top + 5 + "px";
+		popup.style.display = 'inline-block';
+	}
+
+	const networkUnhover = (e) => {
+		const popup = document.getElementById('network-popup');
+		popup.style.display = 'none';
+	}
+
 	return (
 		formState == "Ready" ?
 		<>
 			<Divider />
-			<Header as="h3">Like It? Mint an NFT on the <i>{chain_mapping[props.chainId]}</i>.</Header>
-			<p className="subheader"><a href="https://i.ibb.co/zbRKkF2/OpenSea.png" target="_blank">(Where do these fields populate on OpenSea?)</a></p>
+			<Header as="h3">Like It? Mint an NFT on the <span onMouseOver={networkHover} onMouseOut={networkUnhover}><i><u>{chain_mapping[props.chainId]}</u></i></span>.</Header>
+			<div id="network-popup"><span id="network-popup-text">Change your network in MetaMask to update.</span></div>
 			<Form onSubmit={deployNFTContract}>
 				<Form.Group widths="equal">
 					<Form.Input label="Name: " type="text" name="name" />
 					<Form.Input label="Collection: " type="text" name="collection" />
 				</Form.Group>
 				<Form.Input label="Description: " type="text" name="desc" />
+				<p className="subheader"><a href="https://i.ibb.co/zbRKkF2/OpenSea.png" target="_blank">Where do these fields populate on OpenSea?</a></p>
 				<Form.Group className="field-around-btn">
 					<Form.Button animated type="submit" id="nft-btn" primary>
 						<Button.Content visible>NFT it!</Button.Content>

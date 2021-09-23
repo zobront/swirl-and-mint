@@ -36,6 +36,26 @@ form {
   text-align: center;
 }
 
+#network-popup {
+  position: absolute;
+  display: none;
+}
+
+/* Tooltip text */
+#network-popup-text {
+  width: 200px;
+  background-color: #e0e1e2;
+  color: #000;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+
 .bottom-spacer {
   height:  50px;
 }
