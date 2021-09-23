@@ -106,7 +106,7 @@ const NFTForm = props => {
 	}
 
 	useEffect(() => {
-		if (props.deployStatus == 'pending' && props.combinedImgUrl) {
+		if (props.deployStatus == 'pending' && props.combinedImgHeader == "Voila! Here's what I whipped up for you...") {
 			if (props.hasMetamask) {
 				if (props.chainId in chain_mapping) {
 					setFormState("Ready")	

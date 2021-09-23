@@ -36,6 +36,7 @@ form {
 }
 
 .footer {
+  z-index: 2;
   margin-top: 1rem;
   padding: 1rem;
   background-color: #e0e1e2;

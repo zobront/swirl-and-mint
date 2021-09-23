@@ -5,7 +5,7 @@ const CombinedImage = props => {
 	return (
 		props.url ?
 		<> 
-			<Header as="h3">Voila! Here's what I whipped up for you...</Header>
+			<Header as="h3">{props.headerContent}</Header>
 			<Image src={props.url} size='medium' bordered /> 
 		</>
 		: ''

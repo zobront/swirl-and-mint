@@ -6,4 +6,4 @@ A simple app built with NextJS to create new images and deploy them as NFTs to t
 
 2) Once you find a photo you like, deploy it as a 1/1 NFT to the Ethereum Mainnet, Matic Mainnet, or Rinkeby Test Net with one click.
 
-(See it live at SwirlAndMint.com)[http://swirlandmint.com/]
+See it live at http://swirlandmint.com/
