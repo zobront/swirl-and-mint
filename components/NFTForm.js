@@ -104,8 +104,11 @@ const NFTForm = props => {
 	      }
 	      props.setDeployStatus('minting')
 	      await nft.initialMint(signerAddress, 0);
-	      console.log("Token 0 minted and assigned to: ", signerAddress)
-	      props.setDeployStatus('success')
+	      setTimeout(() => {
+	      	console.log("Token 0 minted and assigned to: ", signerAddress)
+	      	props.setDeployStatus('success')
+	      }, 10000)
+	      
 	    } catch (err) {
 	      console.log('Error with Deployment: ', err);
 	      props.setDeployStatus('failed')
@@ -137,8 +140,6 @@ const NFTForm = props => {
 	    } catch (err) {
 	      console.log('Error updating JSON tracker: ', err)
 	    }
-
-	    setFormState('Ready')
 	}
 
 	useEffect(() => {

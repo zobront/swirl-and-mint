@@ -17,7 +17,7 @@ const ResultsPanel = props => {
 		return <UpdateMessage style="negative" content="Sorry, transaction failed. Try again!" />
 	} else if (props.deployStatus == 'success') {
 		return (<><Divider />
-			<Header as="h3">Success! It'll be live on OpenSea in 30-60 seconds :)</Header>
+			<Header as="h3">Success! Please give it a few minutes to show up on OpenSea.</Header>
 			<div className="success-buttons">
 				<Button onClick={() => visitPage(props.etherscanUrl)} content="View on Etherscan" secondary />
 				<Button onClick={() => visitPage(props.openseaUrl)} content="View on OpenSea" primary />
