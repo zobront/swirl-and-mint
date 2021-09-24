@@ -79,7 +79,6 @@ const NFTForm = props => {
 	    try {
 	      await window.ethereum.request({ method: 'eth_requestAccounts'});
 	      props.setDeployStatus('requesting')
-	      console.log(props.deployStatus)
 	      const provider = new ethers.providers.Web3Provider(window.ethereum);
 	      const signer = provider.getSigner();
 	      signerAddress = await signer.getAddress();
@@ -87,7 +86,6 @@ const NFTForm = props => {
 	      const NFT = await new ethers.ContractFactory(SimpleERC721.abi, SimpleERC721.bytecode, signer);
 	      const nft = await NFT.deploy(colEl.value, "NFT", jsonUrl);
 	      props.setDeployStatus('deploying')
-	      console.log(props.deployStatus)
 	      await nft.deployed();
 	      nftaddress = nft.address;
 	      console.log("NFT deployed to: ", nft.address);
@@ -105,11 +103,9 @@ const NFTForm = props => {
 	      	props.setOpenseaUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
 	      }
 	      props.setDeployStatus('minting')
-	      console.log(props.deployStatus)
 	      await nft.initialMint(signerAddress, 0);
 	      console.log("Token 0 minted and assigned to: ", signerAddress)
 	      props.setDeployStatus('success')
-	      console.log(props.deployStatus)
 	    } catch (err) {
 	      console.log('Error with Deployment: ', err);
 	      props.setDeployStatus('failed')
@@ -210,7 +206,6 @@ const NFTForm = props => {
 					</Form.Button>
 				</Form.Group>
 			</Form>
-			<div className="bottom-spacer" />
 		</>
 		: <>{noFormDisplay()}</>
 	)

@@ -104,6 +104,7 @@ export default function Home() {
           setChainId={setChainId} chainId={chainId} />
         <ResultsPanel deployStatus={deployStatus} etherscanUrl={etherscanUrl} openseaUrl={openseaUrl} />
       </Container>
+      <div className="bottom-spacer" />
       <Footer />
     </>
   );
